@@ -6,13 +6,31 @@
 
 (defconst asciidoc-font-lock-keywords-1
   (list
-   '("^\\[.+\\]\\(\n\\..+\\)?\n[^-.\n].*\\(\n.+\\)*" . font-lock-keyword-face)
-   '("^\\[.+\\]\n\\..+\n-+\\(\n.*\\)+?\n-+$"         . font-lock-keyword-face)
+   ; Document title
+   '("^.+\n=+\n\\([^:].+\n\\)?\\(:.+:.+\n\\)*"   . font-lock-keyword-face)
+   ; Block with lines
+   '("^\\[.+\\]\n\\.[^ ].+\n-+\\(\n.*\\)+?\n-+$" . font-lock-doc-face)
+   ; Headings
+   '("^[^ .].*\n-+$"                  . font-lock-keyword-face)
+   '("^[^ ].*\n\\~+$"                 . font-lock-builtin-face)
+   '("^[^ ].*\n\\^+$"                 . font-lock-type-face)
+   '("^[^ ].*\n\\++$"                 . font-lock-constant-face)
+   '("^== .+"                         . font-lock-keyword-face)
+   '("^=== .+"                        . font-lock-builtin-face)
+   '("^==== .+"                       . font-lock-type-face)
+   '("^===== .+"                      . font-lock-constant-face)
+   ; Block without lines
+   '("^\\[.+\\]\\(\n\\.[^ ].+\\)?\n[^-.\n].*\\(\n.+\\)*" . font-lock-doc-face)
+   ; Lists
+   '("^ *[*.-]+ "                     . font-lock-comment-face)
+   '("^ *[a-z0-9]+\\. "               . font-lock-comment-face)
+   ; Emphasis, teletype font
    '("_\\(.*?\\)_"                    . font-lock-function-name-face)
    '("\\*\\([^ ]\\(.*?[^ ]\\)?\\)\\*" . font-lock-variable-name-face)
-   '("\\+\\(.*?\\)\\+"                . font-lock-builtin-face)
-   '("^[^ ].*\n-+$"                   . font-lock-type-face)
-   '("^[^ ].*\n=+$"                   . font-lock-keyword-face))
+   '("\\+\\(.+?\\)\\+"                . font-lock-string-face)
+   '("`\\(.*?\\)`"                    . font-lock-string-face)
+   ; Links
+   '("link:[^\\[]+?\\[[^\\[]+\\]"     . font-lock-preprocessor-face))
   "Minimal highlighting expressions for AsciiDoc mode")
 
 (defvar asciidoc-font-lock-keywords asciidoc-font-lock-keywords-1
